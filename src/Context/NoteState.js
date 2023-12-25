@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import NotesContext from "./NotesContext";
+import toast from "react-hot-toast";
+import { json } from "react-router-dom";
 
 const NoteState = (props) => {
   const noteInitial = [];
@@ -37,17 +39,11 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
+    const json =await response.json();
     // Logic for adding a note
-    const newNote={
-      "_id": "6582e0cd10a5484991d94b7f",
-      "user": "657efe3c22555abb07de34a8",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2023-12-20T12:40:45.157Z",
-      "__v": 0
-    }
-    setnotes([...notes, newNote]);
+    setnotes([...notes, json]);
+    toast.success("Created Successfully");
+
   };
 
   // Delete note
@@ -68,13 +64,11 @@ const NoteState = (props) => {
     // Logic for deleting a note
     const updatednote = notes.filter((note) => note._id !== id);
     setnotes(updatednote);
+    toast.success("Deleted Successfully");
   };
 
   //Edit note
   const editNote = async (id, title, description, tag) => {
-    // const updatedNotes = notes.map(note => (note._id === id ? { ...note, title, description,tag } : note));
-    // setnotes(updatedNotes);
-
     // API call
     const response = await fetch(`${host}/api/notes/updatenote/${id}`, {
       method: "PUT",
@@ -85,6 +79,7 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
+    console.log(response);
 
     let newNotes=JSON.parse(JSON.stringify(notes))
     // Logic for updation
@@ -97,6 +92,8 @@ const NoteState = (props) => {
       }
     }
     setnotes(newNotes);
+    toast.success("Updated Successfully");
+
   };
 
   return (

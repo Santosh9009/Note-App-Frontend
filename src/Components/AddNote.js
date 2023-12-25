@@ -7,22 +7,21 @@ const AddNote = () => {
 
   const [note, setnote]=useState({title:"",description:"",tag: ""});
 
-  
-
-  const handleClick=(e)=>{
-    e.preventDefault();
-    addNote(note.title, note.description, note.tag);
-  }
-
 
   const onChange=(e)=>{
     setnote({...note, [e.target.name]:e.target.value});
   }
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+    addNote(note.title, note.description, note.tag);
+    setnote({title:"",description:"",tag: ""});
+  };
+
   return (
     <div className="container my-5">
     <h2>Add a Note </h2>
-    <form>
+    <form onSubmit={onSubmit}>
       <div className="mb-3">
         <label htmlFor="title" className="form-label">
           Title
@@ -33,6 +32,9 @@ const AddNote = () => {
           id="title"
           name="title"
           onChange={onChange}
+          minLength={5}
+          required
+          value={note.title}
         />
       </div>
       <div className="mb-3">
@@ -45,6 +47,9 @@ const AddNote = () => {
           id="description"
           name="description"
           onChange={onChange}
+          minLength={5}
+          required
+          value={note.description}
         />
         <div id="emailHelp" className="form-text">
           Write a description for your note
@@ -59,10 +64,13 @@ const AddNote = () => {
           id="tag"
           name="tag"
           onChange={onChange}
+          minLength={3}
+          required
+          value={note.tag}
         />
       </div>
       </div>
-      <button type="submit" className="btn btn-primary" onClick={handleClick}>
+      <button type="submit" className="btn btn-primary">
         Submit
       </button>
     </form>

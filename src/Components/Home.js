@@ -5,7 +5,7 @@ import "./Home.css";
 const Home = () => {
 
   return (
-    <div className="container d-flex flex-column w-75">
+    <div className="container">
     <Notes/>
     </div>
   );
