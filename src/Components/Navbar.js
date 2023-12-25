@@ -1,8 +1,14 @@
 import React from "react";
+import toast from "react-hot-toast";
 import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
+
+  const handleClick=()=>{
+    toast.success('Logged out Successfully');
+    localStorage.removeItem('token');
+  }
 
   return (
     <div>
@@ -46,30 +52,36 @@ const Navbar = () => {
           </div>
           <div>
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${
-                    location.pathname === "/logn" ? "active" : ""
-                  }`}
-                  to="/login"
-                >
-                  <button type="submit" className="btn btn-primary">
-                  Login
-                </button>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${
-                    location.pathname === "/signup" ? "active" : ""
-                  }`}
-                  to="/signup"
-                >
-                  <button type="submit" className="btn btn-primary">
-                  Sign Up
-                </button>
-                </Link>
-              </li>
+              {!localStorage.getItem('token')?
+              <><li className="nav-item">
+                  <Link
+                    className='nav-link'
+                    to="/login"
+                  >
+                    <button type="button" className="btn btn-primary">
+                      Login
+                    </button>
+                  </Link>
+                </li><li className="nav-item">
+                    <Link
+                      className='nav-link'
+                      to="/signup"
+                    >
+                      <button type="button" className="btn btn-primary">
+                        Sign Up
+                      </button>
+                    </Link>
+                  </li></>:
+            <li className="nav-item">
+            <Link
+              className='nav-link'
+              to="/login"
+            >
+              <button type="submit" className="btn btn-primary" onClick={handleClick}>
+              Logout
+            </button>
+            </Link>
+          </li> }
             </ul>
           </div>
         </div>

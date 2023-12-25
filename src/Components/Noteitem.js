@@ -20,7 +20,7 @@ const Noteitem = (props) => {
       <div className="container mb-2">
         <i className="fa-solid fa-trash mx-1" onClick={()=>{deleteNote(note._id)}}></i>
         <i className="fa-solid fa-pen-to-square mx-2" onClick={()=>{updatenote(note)}}></i>
-        <i class="fa-solid fa-copy" onClick={()=>{copyNote(note)}}></i>
+        <i className="fa-solid fa-copy" onClick={()=>{copyNote(note)}}></i>
       </div>
     </div>
   );

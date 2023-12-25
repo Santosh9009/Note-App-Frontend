@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import NotesContext from "./NotesContext";
 import toast from "react-hot-toast";
-import { json } from "react-router-dom";
 
 const NoteState = (props) => {
   const noteInitial = [];
@@ -16,8 +15,7 @@ const NoteState = (props) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU3ZWZlM2MyMjU1NWFiYjA3ZGUzNGE4In0sImlhdCI6MTcwMjgyNDMyOX0.PPqFKf7AmMaHcBTDg4jID_AtsleRHLr99nUAkWoJgZE",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
@@ -34,16 +32,14 @@ const NoteState = (props) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU3ZWZlM2MyMjU1NWFiYjA3ZGUzNGE4In0sImlhdCI6MTcwMjgyNDMyOX0.PPqFKf7AmMaHcBTDg4jID_AtsleRHLr99nUAkWoJgZE",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
     });
-    const json =await response.json();
+    const json = await response.json();
     // Logic for adding a note
     setnotes([...notes, json]);
     toast.success("Created Successfully");
-
   };
 
   // Delete note
@@ -54,8 +50,7 @@ const NoteState = (props) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU3ZWZlM2MyMjU1NWFiYjA3ZGUzNGE4In0sImlhdCI6MTcwMjgyNDMyOX0.PPqFKf7AmMaHcBTDg4jID_AtsleRHLr99nUAkWoJgZE",
+        "auth-token": localStorage.getItem("token"),
       },
     });
     const json = await response.json();
@@ -74,14 +69,13 @@ const NoteState = (props) => {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjU3ZWZlM2MyMjU1NWFiYjA3ZGUzNGE4In0sImlhdCI6MTcwMjgyNDMyOX0.PPqFKf7AmMaHcBTDg4jID_AtsleRHLr99nUAkWoJgZE",
+        "auth-token": localStorage.getItem("token"),
       },
       body: JSON.stringify({ title, description, tag }),
     });
     console.log(response);
 
-    let newNotes=JSON.parse(JSON.stringify(notes))
+    let newNotes = JSON.parse(JSON.stringify(notes));
     // Logic for updation
     for (let i = 0; i < newNotes.length; i++) {
       const element = newNotes[i];
@@ -93,7 +87,6 @@ const NoteState = (props) => {
     }
     setnotes(newNotes);
     toast.success("Updated Successfully");
-
   };
 
   return (

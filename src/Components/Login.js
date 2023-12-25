@@ -20,7 +20,8 @@ const Login = () => {
     const json = await response.json();
     console.log(json);
 
-    if(json.authToken){
+    if(response.ok){
+      localStorage.setItem('token', json.authToken);
       navigate('/');
       toast.success("Logged in successfully");
     }else{
@@ -33,10 +34,11 @@ const Login = () => {
   };
 
   return (
-    <div className="my-5 d-flex justify-content-center">
-      <form className="w-50" onSubmit={submit}>
+    <div className="my-5 d-flex flex-column align-items-center">
+      <h2 className="mb-5">Login to continue with Note Plate</h2>
+      <form className="w-50 p-5 bg-dark text-light rounded" onSubmit={submit}>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email address
           </label>
           <input
@@ -47,13 +49,15 @@ const Login = () => {
             name="email"
             onChange={change}
             value={detail.email}
+            minLength={5}
+            required
           />
           <div id="emailHelp" className="form-text">
             We'll never share your email with anyone else.
           </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input
@@ -63,6 +67,8 @@ const Login = () => {
             name="password"
             onChange={change}
             value={detail.password}
+            minLength={5}
+            required
           />
         </div>
         <button type="submit" className="btn btn-primary">
